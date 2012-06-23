@@ -1,0 +1,56 @@
+    private void metresFocusLost(java.awt.event.FocusEvent evt) {                                 
+        int pis = Integer.parseInt(piscina.getSelectedItem().toString());
+        Object files[][] = null;
+        String columnes[];
+
+        if (pis == 25) {
+            int m = Integer.valueOf(metres.getText());
+
+            if (m == 50) {
+                columnes = new String[2];
+                columnes[0] = "25";
+                columnes[1] = "50";
+            } else {
+                columnes = new String[4];
+                columnes[0] = "25";
+                columnes[1] = "50";
+                columnes[2] = "75";
+                columnes[3] = "100";
+            }
+            if (m / 100 > 0) {
+                files = new Object[m / 100][columnes.length];
+            } else {
+                files = new Object[1][columnes.length];
+            }
+        } else {
+            int m = Integer.valueOf(metres.getText());
+
+            if (m == 50) {
+                columnes = new String[1];
+                columnes[0] = "50";
+            } else {
+                columnes = new String[2];
+                columnes[0] = "50";
+                columnes[1] = "100";
+            }
+            if (m / 100 > 0) {
+                files = new Object[m / 100][columnes.length];
+            } else {
+                files = new Object[1][columnes.length];
+            }
+        }
+        table = new JTable(files, columnes);
+        JScrollPane scrol = new JScrollPane(table);
+        scrol.setSize(eixidaTemps.getSize());
+        table.setFillsViewportHeight(true);
+
+        if (eixidaTemps.getComponentCount() > 1) {
+            eixidaTemps.remove(scrol);
+        }
+
+        eixidaTemps.add(scrol);
+        empezar.setEnabled(true);
+
+        Pegar.pegarCantons(eixidaTemps, scrol);
+
+    }
