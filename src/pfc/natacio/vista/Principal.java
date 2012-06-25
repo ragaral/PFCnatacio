@@ -90,7 +90,6 @@ public class Principal extends javax.swing.JFrame {
         menuCronometro = new javax.swing.JMenu();
         cronoAñadirTiempo = new javax.swing.JMenuItem();
         cronoAñadirMultiplesTiempos = new javax.swing.JMenuItem();
-        cronoAñadirParciales = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
         ayudaActualizar = new javax.swing.JMenuItem();
         ayudaVersion = new javax.swing.JMenuItem();
@@ -410,9 +409,6 @@ public class Principal extends javax.swing.JFrame {
         cronoAñadirMultiplesTiempos.setText("Añadir multiples tiempos");
         menuCronometro.add(cronoAñadirMultiplesTiempos);
 
-        cronoAñadirParciales.setText("Añadir tiempo con parciales");
-        menuCronometro.add(cronoAñadirParciales);
-
         barraMenu.add(menuCronometro);
 
         menuAyuda.setText("Ayuda");
@@ -526,7 +522,6 @@ public class Principal extends javax.swing.JFrame {
     private CalendariNotes.Vista calendariNotes;
     private Utilitats.JTabbedPanePersonalized centre;
     private javax.swing.JMenuItem cronoAñadirMultiplesTiempos;
-    private javax.swing.JMenuItem cronoAñadirParciales;
     private javax.swing.JMenuItem cronoAñadirTiempo;
     private javax.swing.JPanel detaDalt;
     private javax.swing.JPanel dreta;

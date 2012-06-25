@@ -175,11 +175,6 @@
                 <Property name="text" type="java.lang.String" value="A&#xf1;adir multiples tiempos"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="cronoA&#xf1;adirParciales">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="A&#xf1;adir tiempo con parciales"/>
-              </Properties>
-            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuAyuda">
