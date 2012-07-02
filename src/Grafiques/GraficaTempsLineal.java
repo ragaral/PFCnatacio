@@ -130,6 +130,7 @@ public class GraficaTempsLineal extends JPanel {
         axis.setDateFormatOverride(new SimpleDateFormat("dd-MMM-yyyy"));
         
         //AFEGIM LA GRAFICA AL PANEL
+        this.removeAll();
         this.setLayout(new BorderLayout());
         chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(this.getSize());

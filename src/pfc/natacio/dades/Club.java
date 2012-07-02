@@ -123,6 +123,31 @@ public class Club {
         
         return n;
     }
+   
+    /**
+     * (Predictor) Busca un cognom que coicidisca amb les lletres pasades
+     * @param partCognom primeres lletres del cognom a buscar
+     * @return Nadador trobat
+     */
+    public Nadador predirCognom(String nom ,String partCognom){
+        Iterator<Nadador> llista = nadadors.iterator();
+        Nadador n = null, aux;
+        
+        boolean trobat = false;
+        while(llista.hasNext() && !trobat){
+            aux = llista.next();
+//            System.out.println("aux = "+aux.getCognom()+" vs "+partCognom);
+            if(aux.getNom().toLowerCase().equals(nom.toLowerCase()))
+                trobat = aux.getCognom().toLowerCase().startsWith(partCognom.toLowerCase());
+//            System.out.println(trobat);
+            if(trobat){
+                n = aux; trobat = true;
+//                System.out.println("return "+n.getCognom());
+            }
+        }
+        
+        return n;
+    }
     
     /**
      * (Predictor) Busca un Nom que coicidisca amb les lletres pasades 
@@ -183,7 +208,7 @@ public class Club {
      */
     public boolean inserirNadador(String numFitxFed, String nom, String cognom, String fetxNaix,
                     String club, String carrer, String poblacio, String provincia, String pais,
-                    String cp, String telf, String correu) {
+                    String cp, String telf, String correu) throws Exception {
         boolean inserit=false;
         
         if(carrer.isEmpty()) carrer = null;
@@ -245,7 +270,7 @@ public class Club {
      * @param nada 
      * @return true Si el nadador sa esborrat correctament
      */
-    public boolean delNadador(Nadador nada){
+    public boolean delNadador(Nadador nada) throws Exception{
         boolean eliminat = false;
         try {
             String sql;

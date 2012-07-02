@@ -6,6 +6,7 @@
 package pfc.natacio.vista;
 
 import java.awt.Cursor;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import pfc.natacio.exepcions.noHayInternet;
 import pfc.natacio.dades.Club;
@@ -158,6 +159,7 @@ public class Login extends javax.swing.JFrame {
         barraProgres.setValue(0);
         barraProgres.setString("Error al Conectar!");
         JOptionPane.showMessageDialog(null, ex);
+        Toolkit.getDefaultToolkit().beep();
     }
     
     public void setValueProgresBar(int valor){

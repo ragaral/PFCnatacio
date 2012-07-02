@@ -4,8 +4,8 @@ import pfc.natacio.dades.Parcials;
 import pfc.natacio.dades.Prova;
 import pfc.natacio.dades.Club;
 import pfc.natacio.dades.Nadador;
-import Utilitats.CognomPredictiu;
-import Utilitats.NomPredictiu;
+import Utilitats.CognomPredictiuCombo;
+import Utilitats.NomPredictiuCombo;
 import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
 import pfc.natacio.logica.*;
@@ -53,8 +53,8 @@ public class EstadistiquesParcials extends javax.swing.JPanel {
         tarta = new Grafiques.GraficaQuesito();
         toolBar = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
-        nomPredictiu = new NomPredictiu(club);
-        cognomPredictiu = new CognomPredictiu(club,nomPredictiu);
+        nomPredictiu = new NomPredictiuCombo(club);
+        cognomPredictiu = new CognomPredictiuCombo(club,nomPredictiu);
         jSeparator1 = new javax.swing.JToolBar.Separator();
         jLabel2 = new javax.swing.JLabel();
         comboMetres = new javax.swing.JComboBox();
@@ -227,7 +227,7 @@ public class EstadistiquesParcials extends javax.swing.JPanel {
         for(int i = 0; i < parcial.getNumPostes(); i++){
             tempsParcials.setData(parcial.getTemps(i).toSegons(), estil, parcial.getMetres(i)+"");
         }
-        tempsParcials.createChart("Tiempo", "", "Metros", "Tiempo(s)");
+        tempsParcials.createChart("Tiempo", "", "Metros", "Tiempo (seg)");
     }
     
     private void initGraficaVelocitat(Parcials parcial, String estil) {
@@ -245,7 +245,7 @@ public class EstadistiquesParcials extends javax.swing.JPanel {
             tempsAnterior = parcial.getTemps(i).toSegons();
         }
         
-        velocitat.createChart("Velocidad", "", "Metros", "Velocidad(m/s)");
+        velocitat.createChart("Velocidad", "", "Metros", "Velocidad (m/s)");
     }
     
     private void initGraficaAcceleracio(Parcials parcial, String estil){
@@ -265,7 +265,7 @@ public class EstadistiquesParcials extends javax.swing.JPanel {
             tempsAnterior = parcial.getTemps(i).toSegons();
         }
         
-        acceleracio.createChart("Aceleración", "", "Metros", "Aceleracion(m/s^2)");
+        acceleracio.createChart("Aceleración", "", "Metros", "Aceleracion (m/s^2)");
     }
     
     private void initGraficaTarta(Parcials parcials){
@@ -295,7 +295,7 @@ public class EstadistiquesParcials extends javax.swing.JPanel {
     private javax.swing.JButton buttonAceptarCalendari;
     private javax.swing.JButton buttonCalendari;
     private Utilitats.Calendari calendari;
-    private Utilitats.CognomPredictiu cognomPredictiu;
+    private Utilitats.CognomPredictiuCombo cognomPredictiu;
     private javax.swing.JComboBox comboEstil;
     private javax.swing.JComboBox comboMetres;
     private javax.swing.JDialog dialogCalendari;
@@ -303,7 +303,7 @@ public class EstadistiquesParcials extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JToolBar.Separator jSeparator1;
-    private Utilitats.NomPredictiu nomPredictiu;
+    private Utilitats.NomPredictiuCombo nomPredictiu;
     private javax.swing.JSplitPane spaneContenedor;
     private javax.swing.JSplitPane spaneDreta;
     private javax.swing.JSplitPane spaneEsquerra;

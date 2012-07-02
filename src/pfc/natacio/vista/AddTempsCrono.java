@@ -1,9 +1,5 @@
 package pfc.natacio.vista;
 
-import pfc.natacio.dades.Parcials;
-import pfc.natacio.dades.Prova;
-import pfc.natacio.dades.Club;
-import pfc.natacio.dades.Nadador;
 import Grafiques.GraficaLineal;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -12,7 +8,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import pfc.natacio.logica.*;
+import pfc.natacio.dades.Club;
+import pfc.natacio.dades.Nadador;
+import pfc.natacio.dades.Parcials;
+import pfc.natacio.dades.Prova;
+import pfc.natacio.logica.Data;
+import pfc.natacio.logica.Temps;
 
 /**
  *
@@ -31,14 +32,14 @@ public class AddTempsCrono extends javax.swing.JPanel {
      * Creates new form AddTempsCrono
      */
     public AddTempsCrono(Club club, Principal principal) {
-        initComponents();
         this.principal = principal;
         this.club = club;
         metres = new ArrayList<>();
         temps = new ArrayList<>();
         Data d = new Data();
-        fieldData.setText(d.toString());
         this.contradorMetres = 0;
+        initComponents();
+        fieldData.setText(d.toString());
     }
 
     @SuppressWarnings("unchecked")
@@ -61,10 +62,10 @@ public class AddTempsCrono extends javax.swing.JPanel {
         fieldLloc = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        nom = new javax.swing.JTextField();
-        cognom = new javax.swing.JTextField();
         fitxFed = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        nom = new Utilitats.NomPredictiuField(club);
+        cognom = new Utilitats.CognomPredictiuField(club, nom);
         jPanel3 = new javax.swing.JPanel();
         panellBotons = new javax.swing.JPanel();
         empezar = new javax.swing.JButton();
@@ -167,28 +168,6 @@ public class AddTempsCrono extends javax.swing.JPanel {
 
         jLabel6.setText("Nombre: ");
 
-        nom.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                nomFocusGained(evt);
-            }
-        });
-        nom.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                nomKeyReleased(evt);
-            }
-        });
-
-        cognom.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cognomFocusLost(evt);
-            }
-        });
-        cognom.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                cognomKeyReleased(evt);
-            }
-        });
-
         fitxFed.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 fitxFedFocusLost(evt);
@@ -202,6 +181,18 @@ public class AddTempsCrono extends javax.swing.JPanel {
 
         jLabel7.setText("Ficha federativa:");
 
+        nom.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                nomFocusGained(evt);
+            }
+        });
+
+        cognom.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cognomFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -210,10 +201,10 @@ public class AddTempsCrono extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nom)
+                .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cognom)
-                .addGap(24, 24, 24)
+                .addComponent(cognom, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(fitxFed)
@@ -368,22 +359,6 @@ public class AddTempsCrono extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_fitxFedKeyReleased
 
-    private void cognomFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cognomFocusLost
-        String n = nom.getText();
-        String c = cognom.getText();
-        Nadador nadador = club.buscaNadador(n, c);
-//        System.out.println(nadador);
-        if (nadador != null) {
-            fitxFed.setText(nadador.getNumFitxFed());
-            principal.setTextLabelExit("");
-        } else {
-            principal.setTextLabelExit("El nadador no existe!");
-            nom.requestFocus();
-            nom.selectAll();
-        }
-        creaGrafica();
-    }//GEN-LAST:event_cognomFocusLost
-
     private void empezarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empezarActionPerformed
         int mtrs = Integer.parseInt(fieldMetres.getText());
         int metresPiscina = Integer.parseInt(comboMPiscina.getSelectedItem().toString());
@@ -485,45 +460,34 @@ public class AddTempsCrono extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_guardarActionPerformed
 
-    private void nomKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomKeyReleased
-        String text = nom.getText();
-//        System.out.println(evt.getKeyCode());
-//                                             !reroceso            !suprimir
-        if (!evt.isActionKey() && evt.getKeyCode() != 8 && evt.getKeyCode() != 127) {
-            Nadador n = club.predirNom(text);
-            if (n != null) {
-//                System.out.println("rep "+n.getCognom());
-                nom.setText(n.getNom());
-                nom.select(text.length(), nom.getText().length());
-            }
-        }
-    }//GEN-LAST:event_nomKeyReleased
-
-    private void cognomKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cognomKeyReleased
-        String text = cognom.getText();
-//                                            !reroceso            !suprimir
-        if (!evt.isActionKey() && evt.getKeyCode() != 8 && evt.getKeyCode() != 127) {
-            Nadador n = club.predirCognom(text);
-            if (n != null) {
-//                System.out.println("rep "+n.getCognom());
-                cognom.setText(n.getCognom());
-                cognom.select(text.length(), cognom.getText().length());
-            }
-        }
-    }//GEN-LAST:event_cognomKeyReleased
-
-    private void nomFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nomFocusGained
-        if (fieldMetres.getText().isEmpty()) {
-            Toolkit.getDefaultToolkit().beep();
-            fieldMetres.requestFocus();
-        }
-    }//GEN-LAST:event_nomFocusGained
-
     private void fitxFedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fitxFedFocusLost
         if (eixidaTemps.getComponentCount() == 0) {
             creaGrafica();
         }
     }//GEN-LAST:event_fitxFedFocusLost
+
+    private void nomFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nomFocusGained
+        if(fieldMetres.getText().isEmpty()){
+            Toolkit.getDefaultToolkit().beep();
+            fieldMetres.requestFocus();
+        }
+    }//GEN-LAST:event_nomFocusGained
+
+    private void cognomFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cognomFocusLost
+        String n = nom.getText();
+        String c = cognom.getText();
+        Nadador nadador = club.buscaNadador(n, c);
+//        System.out.println(nadador);
+        if (nadador != null) {
+            fitxFed.setText(nadador.getNumFitxFed());
+            principal.setTextLabelExit("");
+        } else {
+            principal.setTextLabelExit("El nadador no existe!");
+            nom.requestFocus();
+//            nom.selectAll();
+        }
+        creaGrafica();
+    }//GEN-LAST:event_cognomFocusLost
 
     private void creaGrafica() {
         gl = new GraficaLineal();
@@ -580,7 +544,7 @@ public class AddTempsCrono extends javax.swing.JPanel {
         this.getParent().repaint();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField cognom;
+    private Utilitats.CognomPredictiuField cognom;
     protected javax.swing.JComboBox comboEstil;
     protected javax.swing.JComboBox comboMPiscina;
     private pfc.natacio.vista.Cronometro cronometro;
@@ -603,7 +567,7 @@ public class AddTempsCrono extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     protected javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField nom;
+    private Utilitats.NomPredictiuField nom;
     private javax.swing.JPanel panellBotons;
     protected javax.swing.JButton parar;
     private javax.swing.JButton reset;

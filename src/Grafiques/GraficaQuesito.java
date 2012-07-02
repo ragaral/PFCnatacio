@@ -53,6 +53,7 @@ public class GraficaQuesito extends JPanel{
         );
 
         //AFEGIM LA GRAFICA AL PANEL
+        this.removeAll();
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(this.getSize());
         this.add(chartPanel);

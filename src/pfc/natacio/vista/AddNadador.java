@@ -12,6 +12,7 @@ import java.awt.Cursor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -263,31 +264,35 @@ public class AddNadador extends javax.swing.JFrame {
              progressBar.setValue(30);
              
              if(campsOK){
-                inserit=club.inserirNadador(numFitx.getText(), nom.getText(), Cognom.getText(), any.getText()+"-"+mes.getText()+"-"+dia.getText(),
-                                        club.getNom(), carrer.getText(), poblacio.getText(), provincia.getText(), "España",
-                                        cp.getText(), telf.getText(), correu.getText());
-                
-                progressBar.setValue(80);
-                if(inserit){
-                    eixidaErr.setText("Nadador introducido correctamente!");
-                    progressBar.setValue(100);
+                 try{
+                    inserit=club.inserirNadador(numFitx.getText(), nom.getText(), Cognom.getText(), any.getText()+"-"+mes.getText()+"-"+dia.getText(),
+                                            club.getNom(), carrer.getText(), poblacio.getText(), provincia.getText(), "España",
+                                            cp.getText(), telf.getText(), correu.getText());
 
-                    resetejaCamps();
+                    progressBar.setValue(80);
+                    if(inserit){
+                        eixidaErr.setText("Nadador introducido correctamente!");
+                        progressBar.setValue(100);
 
-                    jPanel1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                    try {
-                        Thread.sleep(5000);
-                        eixidaErr.setText("");
-                        progressBar.setValue(0);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(AddNadador.class.getName()).log(Level.SEVERE, null, ex);
+                        resetejaCamps();
+
+                        jPanel1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                        try {
+                            Thread.sleep(5000);
+                            eixidaErr.setText("");
+                            progressBar.setValue(0);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(AddNadador.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
-                }
-                else{
-                    progressBar.setValue(0);
-                    //con.tancaConexio();
-                    eixidaErr.setText("ERROR! Nadador NO introducido!");
-                }
+                    else{
+                        progressBar.setValue(0);
+                        //con.tancaConexio();
+                        eixidaErr.setText("ERROR! Nadador NO introducido!");
+                    }
+                 }catch(Exception ex){
+                     JOptionPane.showMessageDialog(null, ex);
+                 }
             }
                 jPanel1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 progressBar.setValue(0);

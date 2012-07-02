@@ -8,9 +8,9 @@ package pfc.natacio.vista;
 import java.awt.Point;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import pfc.natacio.logica.Data;
 import pfc.natacio.dades.Nadador;
 import pfc.natacio.dades.Prova;
+import pfc.natacio.logica.Data;
 
 /**
  *

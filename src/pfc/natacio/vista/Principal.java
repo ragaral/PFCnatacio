@@ -10,8 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import pfc.natacio.dades.Club;
-import pfc.natacio.logica.Data;
 import pfc.natacio.dades.Nadador;
+import pfc.natacio.logica.Data;
 
 /**
  *

@@ -93,6 +93,7 @@ public class GraficaLineal extends JPanel {
 
 
         //AFEGIM LA GRAFICA AL PANEL
+        this.removeAll();
         this.setLayout(new BorderLayout());
         chartPanel = new ChartPanel(chart);
         chartPanel.setSize(this.getSize());
