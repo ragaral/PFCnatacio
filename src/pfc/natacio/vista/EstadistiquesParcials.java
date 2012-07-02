@@ -1,5 +1,9 @@
 package pfc.natacio.vista;
 
+import pfc.natacio.dades.Parcials;
+import pfc.natacio.dades.Prova;
+import pfc.natacio.dades.Club;
+import pfc.natacio.dades.Nadador;
 import Utilitats.CognomPredictiu;
 import Utilitats.NomPredictiu;
 import java.awt.event.FocusEvent;

@@ -1,6 +1,6 @@
 package Utilitats;
 
-import pfc.natacio.logica.Club;
+import pfc.natacio.dades.Club;
 
 /**
  *

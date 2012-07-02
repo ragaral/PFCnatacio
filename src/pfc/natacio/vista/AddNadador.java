@@ -6,7 +6,7 @@
 
 package pfc.natacio.vista;
 
-import pfc.natacio.logica.Club;
+import pfc.natacio.dades.Club;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.util.logging.Level;

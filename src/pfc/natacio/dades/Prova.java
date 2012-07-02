@@ -1,8 +1,11 @@
-package pfc.natacio.logica;
+package pfc.natacio.dades;
 
 import java.util.Objects;
 import javax.swing.JOptionPane;
 import pfc.natacio.exepcions.noHayInternet;
+import pfc.natacio.logica.Conexio;
+import pfc.natacio.logica.Data;
+import pfc.natacio.logica.Temps;
 
 /**
  * @author raul
@@ -130,8 +133,11 @@ public class Prova implements Comparable<Prova>{
 //        System.out.println(">> Insert Prova: "+insert);
         
         Conexio conn = new Conexio();
-        if(!conn.Insert(insert))
-            System.err.println("Error al guardar la prueba!");
+        try{
+            conn.Insert(insert);
+        }catch(Exception ex){
+            throw new Exception("Error al guardar la prueba!", ex);
+        }
 
         String idProvaGuardada[][];
         String consulta = "SELECT id FROM `nadador_prova` "

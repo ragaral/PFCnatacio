@@ -1,5 +1,6 @@
 package pfc.natacio.logica;
 
+import pfc.natacio.dades.Club;
 import pfc.natacio.exepcions.noHayInternet;
 import pfc.natacio.vista.Login;
 

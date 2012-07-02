@@ -1,8 +1,10 @@
-package pfc.natacio.logica;
+package pfc.natacio.dades;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import pfc.natacio.exepcions.noHayInternet;
+import pfc.natacio.logica.Conexio;
+import pfc.natacio.logica.Data;
 
 /**
  *
@@ -112,12 +114,13 @@ public class Nadador implements Comparable<Nadador> {
      * 
      * @param metres
      * @param estil
+     * @param metresPiscina 
      * @return Prova amb millor temps
      */
-    public Prova getMillorProva(int metres, String estil){
+    public Prova getMillorProva(int metres, String estil, int metresPiscina){
         Prova aux = null;
         for(int i = 0; i < proves.size(); i++){
-            if(proves.get(i).getMetres() == metres && proves.get(i).getEstil().equals(estil))
+            if(proves.get(i).getMetres() == metres && proves.get(i).getEstil().equals(estil) && proves.get(i).getMetresPicina() == metresPiscina)
                 if(aux == null) aux = proves.get(i);
                 else if(proves.get(i).getTemps().compareTo(aux.getTemps()) < 0)
                     aux = proves.get(i);

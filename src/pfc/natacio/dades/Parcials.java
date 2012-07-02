@@ -1,8 +1,10 @@
-package pfc.natacio.logica;
+package pfc.natacio.dades;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import pfc.natacio.exepcions.noHayInternet;
+import pfc.natacio.logica.Conexio;
+import pfc.natacio.logica.Temps;
 
 /**
  *
@@ -33,7 +35,9 @@ public class Parcials implements Comparable<Parcials>{
         this.id = id;
         postes = new ArrayList<>();
         for (int i = 0; i < temps.size(); i++) {
-            postes.add( new Posta(metres.get(i), temps.get(i)) );
+            try{
+                postes.add( new Posta(metres.get(i), temps.get(i)) );
+            }catch(IndexOutOfBoundsException ex){ }
         }
     }
     
@@ -45,7 +49,9 @@ public class Parcials implements Comparable<Parcials>{
      */
     public Parcials(ArrayList<Double> metres, ArrayList<Temps> temps){
         for (int i = 0; i < metres.size(); i++) {
-            postes.add( new Posta(metres.get(i), temps.get(i)) );
+            try{
+                postes.add( new Posta(metres.get(i), temps.get(i)) );
+            }catch(IndexOutOfBoundsException ex){ }
         }
     }
     
@@ -114,7 +120,7 @@ public class Parcials implements Comparable<Parcials>{
         }
         
         insert = insert.substring(0, insert.length()-2); //lleva l'ultima coma i espai
-//        System.out.println(">> Insert Parcial: "+insert);
+        System.out.println(">> Insert Parcial: "+insert);
         try {
             Conexio conn = new Conexio();
             if(!conn.Insert(insert))
@@ -122,7 +128,7 @@ public class Parcials implements Comparable<Parcials>{
             conn.tancaConexio();
         } catch (noHayInternet ex) {
             postes = null;
-            JOptionPane.showMessageDialog(null, "No se an podido guardar los parciales.\n"+ex);
+            throw new Exception("No se an podido guardar los parciales", ex);
         }
     }
     

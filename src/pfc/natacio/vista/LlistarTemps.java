@@ -9,8 +9,8 @@ import java.awt.Point;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import pfc.natacio.logica.Data;
-import pfc.natacio.logica.Nadador;
-import pfc.natacio.logica.Prova;
+import pfc.natacio.dades.Nadador;
+import pfc.natacio.dades.Prova;
 
 /**
  *
@@ -141,6 +141,7 @@ public class LlistarTemps extends javax.swing.JPanel {
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
         menuItemVerEstadisticas.setEnabled(true);
+        popupMenu.setVisible(false);
         Point p = evt.getPoint();
         int row = tabla.rowAtPoint(p);
         int col = tabla.columnAtPoint(p);
@@ -163,6 +164,7 @@ public class LlistarTemps extends javax.swing.JPanel {
     }//GEN-LAST:event_tablaMouseClicked
 
     private void menuItemVerEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemVerEstadisticasActionPerformed
+        popupMenu.setVisible(false);
         int row = tabla.convertRowIndexToModel(tabla.getSelectedRow());
         
         int metres = Integer.parseInt(tabla.getModel().getValueAt(row, 0).toString());

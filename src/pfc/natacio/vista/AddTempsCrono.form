@@ -213,6 +213,7 @@
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="text" type="java.lang.String" value="Brazadas:"/>
+            <Property name="toolTipText" type="java.lang.String" value="Brazadas realizada en un largo"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="fieldBrasades">

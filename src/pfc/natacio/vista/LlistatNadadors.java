@@ -9,8 +9,8 @@ import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import pfc.natacio.logica.Club;
-import pfc.natacio.logica.Nadador;
+import pfc.natacio.dades.Club;
+import pfc.natacio.dades.Nadador;
 
 /**
  *

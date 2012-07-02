@@ -1,4 +1,4 @@
-package pfc.natacio.logica;
+package pfc.natacio.dades;
 
 import java.util.Iterator;
 import java.util.TreeSet;
@@ -6,6 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import pfc.natacio.exepcions.noHayInternet;
+import pfc.natacio.logica.Conexio;
+import pfc.natacio.logica.Data;
 
 
 /**

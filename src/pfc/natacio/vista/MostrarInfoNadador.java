@@ -6,7 +6,8 @@
 
 package pfc.natacio.vista;
 
-import pfc.natacio.logica.Nadador;
+import java.awt.Cursor;
+import pfc.natacio.dades.Nadador;
 
 /**
  *
@@ -253,9 +254,11 @@ public class MostrarInfoNadador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mostrarTemps(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarTemps
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         LlistarTemps llistatTemps = new LlistarTemps(nadador, principal);
         principal.addPestanya("Tiempos de "+nadador.getNom(), llistatTemps);
         this.dispose();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_mostrarTemps
 
     private void estadistiquesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadistiquesActionPerformed

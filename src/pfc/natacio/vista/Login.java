@@ -8,7 +8,7 @@ package pfc.natacio.vista;
 import java.awt.Cursor;
 import javax.swing.JOptionPane;
 import pfc.natacio.exepcions.noHayInternet;
-import pfc.natacio.logica.Club;
+import pfc.natacio.dades.Club;
 import pfc.natacio.logica.ComprovarLogin;
 
 /**

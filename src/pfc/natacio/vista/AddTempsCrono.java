@@ -1,5 +1,9 @@
 package pfc.natacio.vista;
 
+import pfc.natacio.dades.Parcials;
+import pfc.natacio.dades.Prova;
+import pfc.natacio.dades.Club;
+import pfc.natacio.dades.Nadador;
 import Grafiques.GraficaLineal;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -83,6 +87,7 @@ public class AddTempsCrono extends javax.swing.JPanel {
         comboEstil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Espalda", "Braza", "Mariposa", "Libres", "Estilos" }));
 
         jLabel5.setText("Brazadas:");
+        jLabel5.setToolTipText("Brazadas realizada en un largo");
 
         fieldBrasades.setToolTipText("Brazadas realizada en un largo");
 
@@ -394,15 +399,19 @@ public class AddTempsCrono extends javax.swing.JPanel {
             
             if (contradorMetres == 1) {
                 gl.setData(t.toSegons(), "TiempoActual", "12.0");
+                metres.add(12.0);
             }else {
                 if ((contradorMetres) % 3 == 0) {
-                    aux = ((contradorMetres) / 3) * 25;
-                } else if (aux % 25 == 0) {
+                    aux = ((contradorMetres) / 3) * metresPiscina;
+                } else if (aux % metresPiscina == 0) {
                     aux += 7.5;
                 } else {
                     aux += 10;
+                    if(metresPiscina == 50)
+                        aux += 25;
                 }
                 gl.setData(t.toSegons(), "TiempoActual", "" + aux);
+                metres.add(aux);
             }
             this.temps.add(t);
 //            System.out.println(contradorMetres+" >> "+aux+" - "+t);
@@ -422,6 +431,7 @@ public class AddTempsCrono extends javax.swing.JPanel {
         cronometro.para();
         Temps t = new Temps(cronometro.toString());
         this.temps.add(t);
+        metres.add( Double.valueOf(fieldMetres.getText()) );
         eixidaTemps.removeAll();
         gl.setData(t.toSegons(), "TiempoActual", fieldMetres.getText()+".0");
         gl.createChart("", "", "Metros", "Tiempo");
@@ -440,19 +450,24 @@ public class AddTempsCrono extends javax.swing.JPanel {
         fitxFed.setText("");
         cronometro = new Cronometro();
         eixidaTemps.removeAll();
+        eixidaTemps.repaint();
     }//GEN-LAST:event_resetActionPerformed
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-        if(fieldBrasades.getText().isEmpty() && fieldLloc.getText().isEmpty())
+        if(fieldBrasades.getText().equals("") && fieldLloc.getText().equals(""))
             JOptionPane.showMessageDialog(null, "Rellene todos los campos", "Revise campos", JOptionPane.INFORMATION_MESSAGE);
         else{
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             try {
+                int brasades = 0;
+                if(!fieldBrasades.getText().isEmpty()){
+                    brasades = Integer.parseInt(fieldBrasades.getText());
+                }
                 Nadador nadaux = club.buscaNadador(fitxFed.getText());
-                Prova prvAux = new Prova(Integer.parseInt(fieldMetres.getText()), comboEstil.getSelectedItem().toString(), temps.get(temps.size()-1).toString(), fieldData.getText(), fieldLloc.getText(), Integer.parseInt(comboMPiscina.getSelectedItem().toString()), Integer.parseInt(fieldBrasades.getText()));
+                Prova prvAux = new Prova(Integer.parseInt(fieldMetres.getText()), comboEstil.getSelectedItem().toString(), temps.get(temps.size()-1).toString(), fieldData.getText(), fieldLloc.getText(), Integer.parseInt(comboMPiscina.getSelectedItem().toString()), brasades);
                 prvAux.setDataBase(nadaux);
 
-                while(prvAux.getID() == 0){ Thread.sleep(100); }
+                while(prvAux.getID() == 0){ Thread.sleep(10); }
                 Parcials parcialAux = new Parcials(prvAux.getID(), metres, temps);
                 parcialAux.setDataBase();
                 prvAux.setParcial(parcialAux);
@@ -462,14 +477,9 @@ public class AddTempsCrono extends javax.swing.JPanel {
                 principal.setTextLabelExit("Guardado satisfactoriamente!");
                 principal.setValueProgresBar(100);
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-
-                Thread.sleep(5000);
-                principal.setTextLabelExit("");
-                principal.setValueProgresBar(0);
-                JOptionPane.showMessageDialog(null, "Tiempo guardado!");
             } catch (Exception ex) {
                 Logger.getLogger(AddTempsCrono.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "Error! Nadador no guardado!");
+                JOptionPane.showMessageDialog(null, "Error! Tiempo no guardado!\n"+ex.getLocalizedMessage());
             }
             this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
@@ -528,30 +538,32 @@ public class AddTempsCrono extends javax.swing.JPanel {
 //         System.out.println("numero de parcials: "+numParcials);
 
         //** Pintem la grafica del millor temps **
-        Prova millorProva = nadAux.getMillorProva(mtrs, comboEstil.getSelectedItem().toString());
+        Prova millorProva = nadAux.getMillorProva(mtrs, comboEstil.getSelectedItem().toString(), metresPiscina);
         if (millorProva != null) {
             if (millorProva.conteParcials()) {
                 gl.setData(0, "MejorPrueba", "0");
                 for (int i = 0; i < millorProva.getParcials().getNumPostes(); i++) {
                     gl.setData(millorProva.getParcials().getTemps(i).toSegons(), "MejorPrueba", String.valueOf(millorProva.getParcials().getMetres(i)));
-                    this.metres.add(millorProva.getParcials().getMetres(i));
+//                    this.metres.add(millorProva.getParcials().getMetres(i));
                 }
             } else {
                 //nia q fer aço perq si afegixes 2 valors solts (0 i el final) no es pinten
                 double increment = (millorProva.getTemps().toSegons() / numParcials);
                 gl.setData(0, "MejorPrueba", "0");
                 gl.setData(increment, "MejorPrueba", "12.0");
-                this.metres.add(12.0);
+//                this.metres.add(12.0);
                 for (int i = 1; i < numParcials; i++) {
                     if ((i + 1) % 3 == 0) {
-                        aux = ((i + 1) / 3) * 25;
-                    } else if (aux % 25 == 0) {
+                        aux = ((i + 1) / 3) * metresPiscina;
+                    } else if (aux % metresPiscina == 0) {
                         aux += 7.5;
                     } else {
                         aux += 10;
+                        if(metresPiscina == 50)
+                            aux += 25;
                     }
                     gl.setData((i + 1) * increment, "MejorPrueba", "" + aux);
-                    this.metres.add(aux);
+//                    this.metres.add(aux);
                 }
             }
 //            System.out.println("Grafica creada");

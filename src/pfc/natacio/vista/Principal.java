@@ -6,10 +6,12 @@
 package pfc.natacio.vista;
 
 import java.awt.Component;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import pfc.natacio.logica.Club;
+import pfc.natacio.dades.Club;
 import pfc.natacio.logica.Data;
-import pfc.natacio.logica.Nadador;
+import pfc.natacio.dades.Nadador;
 
 /**
  *
@@ -493,12 +495,38 @@ public class Principal extends javax.swing.JFrame {
         centre.setSelectedIndex(centre.getTabCount()-1);
     }
     
-    public void setValueProgresBar(int value){
-        barraProgres.setValue(value);
+    public void setValueProgresBar(final int value){
+        Runnable miRunn = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    barraProgres.setValue(value);
+                    Thread.sleep(5000);
+                    barraProgres.setValue(0);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        Thread th = new Thread(miRunn);
+        th.start();
     }
     
-    public void setTextLabelExit(String text){
-        labelBaix.setText(text);
+    public void setTextLabelExit(final String text){
+        Runnable miRunn = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    labelBaix.setText(text);
+                    Thread.sleep(5000);
+                    labelBaix.setText("");
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        Thread th = new Thread(miRunn);
+        th.start();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

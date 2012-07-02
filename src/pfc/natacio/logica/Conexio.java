@@ -27,17 +27,18 @@ public class Conexio {
         this.user = "raulalkla";
         this.pass = "42954295";*/
         
+        
         this.server = "localhost";
         this.bd = "natacio";
         this.user = "natacio";
         this.pass = "esports gandia";
 
-        /*this.server = "raugaral.no-ip.org";
-        this.bd = "natacio_final";
-        this.user = "natacio";
-        this.pass = "esports gandia";*/
+        /*this.server = "www.freesql.org";
+        this.bd = "natacio";
+        this.user = "raulalkla";
+        this.pass = "42954295";*/
      
-     creaConexio();
+        creaConexio();
     }
 
     /**
@@ -216,7 +217,7 @@ public class Conexio {
      * @param sql instruccio sql
      * @return true si sa fet el insert
      */
-    public boolean Insert(String sql){
+    public boolean Insert(String sql) throws Exception{
         return exec(sql);
     }
 
@@ -225,19 +226,17 @@ public class Conexio {
      * @param sql instruccio sql
      * @return true si sa fet el delete
      */
-    public boolean Delete(String sql){
+    public boolean Delete(String sql) throws Exception{
         return exec(sql);
     }
 
-    private boolean exec(String sql){
+    private boolean exec(String sql) throws Exception{
         try{
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
             if(!stmt.isClosed()) stmt.close();
         }catch(SQLException e){
-//            Logger.getLogger(Conexio.class.getName()).log(Level.SEVERE, null, e);
-            System.err.println("ERROR EN L'INSTRUCCIO SQL!!\n"+sql+"\n"+e);
-            return false;
+            throw new Exception(e);
         }
         return true;
     }
